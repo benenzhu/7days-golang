@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-var db = map[string]string{
+var db = map[string]string{ // 模拟耗时的数据库
 	"Tom":  "630",
 	"Jack": "589",
 	"Sam":  "567",
@@ -19,7 +19,10 @@ func TestGetter(t *testing.T) {
 	})
 
 	expect := []byte("key")
-	if v, _ := f.Get("key"); !reflect.DeepEqual(v, expect) {
+	v, _ := f.Get("key")
+	t.Log(v)
+	t.Log(string(v))
+	if !reflect.DeepEqual(v, expect) {
 		t.Fatal("callback failed")
 	}
 }

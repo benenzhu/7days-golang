@@ -29,16 +29,16 @@ func newContext(w http.ResponseWriter, req *http.Request) *Context {
 }
 
 func (c *Context) PostForm(key string) string {
-	return c.Req.FormValue(key)
+	return c.Req.FormValue(key) // Request.FormValue(key)
 }
 
 func (c *Context) Query(key string) string {
-	return c.Req.URL.Query().Get(key)
+	return c.Req.URL.Query().Get(key) // Request.URL.Query().Get(key)
 }
 
 func (c *Context) Status(code int) {
 	c.StatusCode = code
-	c.Writer.WriteHeader(code)
+	c.Writer.WriteHeader(code) // response.Write
 }
 
 func (c *Context) SetHeader(key string, value string) {

@@ -28,7 +28,7 @@ var DefaultOption = &Option{
 	CodecType:   codec.GobType,
 }
 
-// Server represents an RPC Server.
+// Server represents an RPC Server. // 启动一个RPC server, 然后其他人可以通过 TCP 进行调用得到结果是吧.
 type Server struct {
 	serviceMap sync.Map
 }
@@ -39,7 +39,7 @@ func NewServer() *Server {
 }
 
 // DefaultServer is the default instance of *Server.
-var DefaultServer = NewServer()
+var DefaultServer = NewServer() // go 居然可以这样初始化东西.
 
 // ServeConn runs the server on a single connection.
 // ServeConn blocks, serving the connection until the client hangs up.
@@ -65,21 +65,21 @@ func (server *Server) ServeConn(conn io.ReadWriteCloser) {
 // invalidRequest is a placeholder for response argv when error occurs
 var invalidRequest = struct{}{}
 
-func (server *Server) serveCodec(cc codec.Codec) {
+func (server *Server) serveCodec(cc codec.Codec) { // 主函数.
 	sending := new(sync.Mutex) // make sure to send a complete response
 	wg := new(sync.WaitGroup)  // wait until all request are handled
 	for {
-		req, err := server.readRequest(cc)
-		if err != nil {
+		req, err := server.readRequest(cc) // readhaed readbody
+		if err != nil {                    // 发生了错误.
 			if req == nil {
 				break // it's not possible to recover, so close the connection
 			}
 			req.h.Error = err.Error()
-			server.sendResponse(cc, req.h, invalidRequest, sending)
+			server.sendResponse(cc, req.h, invalidRequest, sending) // 2. 发送错误.
 			continue
 		}
 		wg.Add(1)
-		go server.handleRequest(cc, req, sending, wg)
+		go server.handleRequest(cc, req, sending, wg) // 2. 处理请求.
 	}
 	wg.Wait()
 	_ = cc.Close()
@@ -177,7 +177,7 @@ func (server *Server) Accept(lis net.Listener) {
 			log.Println("rpc server: accept error:", err)
 			return
 		}
-		go server.ServeConn(conn)
+		go server.ServeConn(conn) // 启动一个新的池子来回应么?
 	}
 }
 

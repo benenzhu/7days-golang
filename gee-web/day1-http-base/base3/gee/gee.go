@@ -44,6 +44,7 @@ func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	key := req.Method + "-" + req.URL.Path
 	if handler, ok := engine.router[key]; ok {
 		handler(w, req)
+		log.Println("serve", key)
 	} else {
 		fmt.Fprintf(w, "404 NOT FOUND: %s\n", req.URL)
 	}

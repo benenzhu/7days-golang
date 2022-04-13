@@ -8,6 +8,11 @@ import (
 type router struct {
 	roots    map[string]*node
 	handlers map[string]HandlerFunc
+	// addRoute(method string, pattern string, handler HandlerFunc) // 首先 parse出来.
+	//		parsePattern(pattern string) []string
+	// getRoute(method string, path string) (*node, map[string]string)
+	// getRoutes(method string) []*node
+	// handle(c *Context)
 }
 
 func newRouter() *router {

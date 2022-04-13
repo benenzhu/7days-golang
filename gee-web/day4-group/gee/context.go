@@ -15,7 +15,7 @@ type Context struct {
 	// request info
 	Path   string
 	Method string
-	Params map[string]string
+	Params map[string]string // 路由参数的访问.
 	// response info
 	StatusCode int
 }
@@ -30,7 +30,7 @@ func newContext(w http.ResponseWriter, req *http.Request) *Context {
 }
 
 func (c *Context) Param(key string) string {
-	value, _ := c.Params[key]
+	value := c.Params[key] // 获取到值.
 	return value
 }
 

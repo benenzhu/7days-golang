@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-var db = map[string]string{
+var db = map[string]string{ // 模拟耗时的数据库
 	"Tom":  "630",
 	"Jack": "589",
 	"Sam":  "567",

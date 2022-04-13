@@ -32,7 +32,7 @@ func main() {
 		}))
 
 	addr := "localhost:9999"
-	peers := geecache.NewHTTPPool(addr)
+	peers := geecache.NewHTTPPool(addr) // 在这个地址上服务.
 	log.Println("geecache is running at", addr)
 	log.Fatal(http.ListenAndServe(addr, peers))
 }

@@ -24,13 +24,16 @@ type HTTPPool struct {
 	mu          sync.Mutex // guards peers and httpGetters
 	peers       *consistenthash.Map
 	httpGetters map[string]*httpGetter // keyed by e.g. "http://10.0.0.2:8008"
+	// Log(format string, v ...interface{})
+	// ServeHTTP(w http.ResponseWriter, r *http.Request)
+	// TODO 加了一些东西.
 }
 
 // NewHTTPPool initializes an HTTP pool of peers.
 func NewHTTPPool(self string) *HTTPPool {
 	return &HTTPPool{
-		self:     self,
-		basePath: defaultBasePath,
+		self:     self,            // 地址.
+		basePath: defaultBasePath, // _geecache 上面
 	}
 }
 
@@ -52,8 +55,8 @@ func (p *HTTPPool) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	groupName := parts[0]
-	key := parts[1]
+	groupName := parts[0] // name
+	key := parts[1]       // key
 
 	group := GetGroup(groupName)
 	if group == nil {

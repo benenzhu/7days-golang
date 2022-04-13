@@ -24,7 +24,7 @@ func main() {
 	log.SetFlags(0)
 	addr := make(chan string)
 	go startServer(addr)
-	client, _ := geerpc.Dial("tcp", <-addr)
+	client, _ := geerpc.Dial("tcp", <-addr) //client 启动.
 	defer func() { _ = client.Close() }()
 
 	time.Sleep(time.Second)
@@ -36,11 +36,12 @@ func main() {
 			defer wg.Done()
 			args := fmt.Sprintf("geerpc req %d", i)
 			var reply string
+			// 直接进行调用了.
 			if err := client.Call("Foo.Sum", args, &reply); err != nil {
 				log.Fatal("call Foo.Sum error:", err)
 			}
 			log.Println("reply:", reply)
-		}(i)
+		}(i) // 这里必须这样传进去.
 	}
 	wg.Wait()
 }

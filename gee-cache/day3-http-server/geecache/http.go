@@ -13,14 +13,17 @@ const defaultBasePath = "/_geecache/"
 type HTTPPool struct {
 	// this peer's base URL, e.g. "https://example.net:8000"
 	self     string
-	basePath string
+	basePath string // 存放的path, group 和 key .
+	// Log(format string, v ...interface{})
+	// ServeHTTP(w http.ResponseWriter, r *http.Request)
+
 }
 
 // NewHTTPPool initializes an HTTP pool of peers.
 func NewHTTPPool(self string) *HTTPPool {
 	return &HTTPPool{
-		self:     self,
-		basePath: defaultBasePath,
+		self:     self,            // 地址.
+		basePath: defaultBasePath, // _geecache 上面
 	}
 }
 
@@ -42,8 +45,8 @@ func (p *HTTPPool) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	groupName := parts[0]
-	key := parts[1]
+	groupName := parts[0] // name
+	key := parts[1]       // key
 
 	group := GetGroup(groupName)
 	if group == nil {

@@ -3,6 +3,9 @@ package geecache
 // A ByteView holds an immutable view of bytes.
 type ByteView struct {
 	b []byte
+	// Len() int
+	// ByteSlice() []byte  	// 拷贝返回新的.
+	// String() string		// 返回string或者打印?
 }
 
 // Len returns the view's length
